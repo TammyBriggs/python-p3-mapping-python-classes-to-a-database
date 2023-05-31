@@ -5,19 +5,29 @@ CURSOR = CONN.cursor()
 
 class Song:
 
+    all = []
+
     def __init__(self, name, album):
         self.id = None
         self.name = name
         self.album = album
 
     @classmethod
-    def create_table(self):
+    def create_table(cls):
         sql = """
             CREATE TABLE IF NOT EXISTS songs (
                 id INTEGER PRIMARY KEY,
                 name TEXT,
                 album TEXT
             )
+        """
+
+        CURSOR.execute(sql)
+
+    @classmethod
+    def drop_table(cls):
+        sql = """
+            DROP TABLE IF EXISTS songs
         """
 
         CURSOR.execute(sql)
@@ -37,26 +47,5 @@ class Song:
         song = Song(name, album)
         song.save()
         return song
-        
+    
     pass
-
-# hello = Song("Hello", "25")
-# hello.save()
-
-# despacito = Song("Despacito", "Vida")
-# despacito.save()
-
-# songs = CURSOR.execute('SELECT * FROM songs')
-# print([row for row in songs])
-
-# hello = Song("Hello", "25")
-# hello.save()
-
-# despacito = Song("Despacito", "Vida")
-# despacito.save()
-
-# print(hello.id)
-# print(despacito.id)
-
-song = Song.create("Hello", "25")
-print(song.name)
